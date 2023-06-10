@@ -9,13 +9,11 @@ export function Circle(){
     const svgRef = useRef<SVGSVGElement | null>(null)
 
     useEffect(()=>{
-        // svgRef.current
-        select(svgRef.current).append('circle').attr('cx', '50%')
-            .attr('cy', '50%')
-            .attr('r', 20)
-            .style('fill', 'green');
+        select(svgRef.current)
+            .attr('width', width)
+            .attr('height', height)
 
-        drawCircle(svgRef)
+        drawCircle(svgRef, 'firstCircle')
     },)
 
 
