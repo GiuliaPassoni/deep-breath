@@ -1,7 +1,7 @@
 import React from "react";
 import {min, select} from "d3";
 
-export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string){
+export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, startRadius:number){
     const svg = svgRef.current
     const circle = select(svg).append('circle')
         .attr('id', `${circleId}`)
@@ -9,13 +9,13 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
         .attr('cy', '50%')
         .attr('stroke','white')
         .attr("stroke-width", 5)
-        .attr('r', 200)
+        .attr('r', startRadius)
         .style('fill', '#a6a6a6');
 
     return circle
 }
 
-export function pulseCircle(circleId:string){
+export function pulseCircle(circleId:string, expandedRadius: number, reducedRadius: number){
     const circleIdSelector:string = 'circle#'+circleId
     let circle = select(`${circleIdSelector}`)
 
@@ -23,10 +23,32 @@ export function pulseCircle(circleId:string){
         .duration(5000)
         .attr("stroke-width", 20)
         .attr('stroke', 'red')
-        .attr("r", 300)
+        .attr("r", expandedRadius)
         .transition()
         .duration(5000)
         .attr('stroke-width', 0.5)
-        .attr("r", 200)
+        .attr("r", reducedRadius)
         .ease()
+}
+
+
+export function growCircle(circleId:string, duration: number, strokeWidth: number, expandedRadius: number){
+    const circleIdSelector:string = 'circle#'+circleId
+    let circle = select(`${circleIdSelector}`)
+
+    return circle.transition()
+        .duration(duration)
+        .attr("stroke-width", 20)
+        .attr('stroke', 'red')
+        .attr("r", 300)
+}
+
+export function shrinkCircle(circleId:string, duration: number, strokeWidth: number, reducedRadius: number){
+    const circleIdSelector:string = 'circle#'+circleId
+    let circle = select(`${circleIdSelector}`)
+
+    return circle.transition()
+        .duration(duration)
+        .attr('stroke-width', 0.5)
+        .attr("r", 200)
 }
