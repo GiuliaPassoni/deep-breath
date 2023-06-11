@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import {select} from "d3";
-import {drawCircle} from "../utils/drawCircle";
+import {drawCircle, pulseCircle} from "../utils/drawCircle";
 
 
 const width:number = window.innerWidth
@@ -13,13 +13,14 @@ export function Circle(){
             .attr('width', width)
             .attr('height', height)
 
-        drawCircle(svgRef, 'firstCircle', false)
+        drawCircle(svgRef, 'firstCircle')
     },)
 
 
     return (
         <div>
             <svg ref={svgRef}/>
+            <button onClick={()=>{pulseCircle(svgRef, 'firstCircle')}}>Click me</button>
         </div>
     );
 }

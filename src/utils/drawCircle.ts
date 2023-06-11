@@ -1,31 +1,34 @@
 import React from "react";
 import {min, select} from "d3";
 
-export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, increase: Boolean){
+export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string){
     const svg = svgRef.current
-    let time:number = 0
+    const circle = select(svg).append('circle')
+        .attr('id', `${circleId}`)
+        .attr('cx', '50%')
+        .attr('cy', '50%')
+        .attr('stroke','white')
+        .attr("stroke-width", 5)
+        .attr('r', 200)
+        .style('fill', '#a6a6a6');
 
-    let myTimerCounter: number=0
+    return circle
+}
 
-    const myInterval: NodeJS.Timer = setInterval(()=>{
-        let timeIncrease: number = time*2, timeDecrease: number = time*.5
-        console.log('timeIncrease', timeIncrease, 'timeDecrease', timeDecrease)
-        let minRadius: number = 2, maxRadius: number = 200,
-            radius: number = increase ? minRadius : maxRadius
+export function pulseCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId:string){
+    const circleIdSelector:string = 'circle#'+circleId
+    // const svg = svgRef.current
+    // let circle = svg.select(circleIdSelector)
+    let circle = select(`${circleIdSelector}`)
 
-        myTimerCounter += 1
-        if(myTimerCounter === 250){
-            clearInterval(myInterval)
-        }else {
-            select(svg).append('circle')
-                .attr('id', `${circleId}`)
-                .attr('cx', '50%')
-                .attr('cy', '50%')
-                .attr('stroke','black')
-                .attr('r', increase ? radius*time : radius-time)
-                .style('fill', '#a6a6a6');
-        }
-        time+=.25
-        console.log('time', time)
-    }, time)
+    circle.transition()
+        .duration(5000)
+        .attr("stroke-width", 20)
+        .attr('stroke', 'red')
+        .attr("r", 300)
+        .transition()
+        .duration(5000)
+        .attr('stroke-width', 0.5)
+        .attr("r", 200)
+        .ease()
 }
