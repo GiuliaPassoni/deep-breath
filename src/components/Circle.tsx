@@ -1,30 +1,45 @@
 import React, {useEffect, useRef} from "react";
 import {select} from "d3";
-import {drawCircle, growCircle, pulseCircle, shrinkCircle} from "../utils/drawCircle";
+import {
+    drawCircle,
+    growCircle,
+    pulseCircle,
+    shrinkCircle,
+    testSelectSvgElement
+} from "../utils/drawCircle";
 
 
 const width:number = window.innerWidth
 const height:number = window.innerHeight
-const startRadius: number = 50
+const startRadius: number = 50, maxRadius: number = 300
+const duration:number = 1000
 
 export function Circle(){
     const svgRef = useRef<SVGSVGElement | null>(null)
+    let initialisedRef: Boolean = false
 
     useEffect(()=>{
-        select(svgRef.current)
-            .attr('width', width)
-            .attr('height', height)
+        console.log(svgRef.current, 'before')
+        if(!initialisedRef){
+            initialisedRef = true
+            select(svgRef.current)
+                .attr('width', width)
+                .attr('height', height)
+                .attr('id', 'mySvgId')
 
-        drawCircle(svgRef, 'firstCircle', startRadius)
-    },)
+            drawCircle(svgRef, 'firstCircle', startRadius)
+            console.log(svgRef.current, 'test my useEffect')
+            testSelectSvgElement('firstCircle')
+        }
+    })
 
 
     return (
         <div>
             <svg ref={svgRef}/>
-            <button onClick={()=>{pulseCircle('firstCircle', 1000,300, startRadius)}}>Pulse</button>
-            <button onClick={()=>{growCircle('firstCircle', 5000, 20, 300)}}>Grow</button>
-            <button onClick={()=>{shrinkCircle('firstCircle',5000, 20, startRadius)}}>Shrink</button>
+            <button onClick={()=>{pulseCircle('firstCircle', duration,maxRadius, startRadius)}}>Pulse</button>
+            <button onClick={()=>{growCircle('firstCircle', duration, 20, maxRadius)}}>Grow</button>
+            <button onClick={()=>{shrinkCircle('firstCircle',duration, 20, startRadius)}}>Shrink</button>
         </div>
     );
 }

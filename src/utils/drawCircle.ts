@@ -1,5 +1,5 @@
 import React from "react";
-import {min, select} from "d3";
+import {select} from "d3";
 
 export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, startRadius: number) {
     const svg = svgRef.current
@@ -13,6 +13,13 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
         .style('fill', '#a6a6a6');
 
     return circle
+}
+
+export function testSelectSvgElement(svgId: string){
+    const idSelector: string = '#' + svgId
+    let selectedSvg = select(`${idSelector}`).attr('class', 'red').attr("style", "outline: thin solid red;")
+
+    return selectedSvg
 }
 
 export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number) {
@@ -46,7 +53,7 @@ export function growCircle(circleId: string, duration: number, strokeWidth: numb
         .duration(duration)
         .attr("stroke-width", 20)
         .attr('stroke', 'red')
-        .attr("r", 300)
+        .attr("r", expandedRadius)
 }
 
 export function shrinkCircle(circleId: string, duration: number, strokeWidth: number, reducedRadius: number) {
@@ -56,5 +63,5 @@ export function shrinkCircle(circleId: string, duration: number, strokeWidth: nu
     return circle.transition()
         .duration(duration)
         .attr('stroke-width', 0.5)
-        .attr("r", 200)
+        .attr("r", reducedRadius)
 }
