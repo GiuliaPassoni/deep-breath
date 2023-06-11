@@ -22,7 +22,7 @@ export function Circle(){
     return (
         <div>
             <svg ref={svgRef}/>
-            <button onClick={()=>{pulseCircle('firstCircle', 300, startRadius)}}>Pulse</button>
+            <button onClick={()=>{pulseCircle('firstCircle', 1000,300, startRadius)}}>Pulse</button>
             <button onClick={()=>{growCircle('firstCircle', 5000, 20, 300)}}>Grow</button>
             <button onClick={()=>{shrinkCircle('firstCircle',5000, 20, startRadius)}}>Shrink</button>
         </div>
