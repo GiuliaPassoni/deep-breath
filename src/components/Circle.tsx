@@ -13,7 +13,7 @@ export function Circle(){
             .attr('width', width)
             .attr('height', height)
 
-        drawCircle(svgRef, 'firstCircle')
+        drawCircle(svgRef, 'firstCircle', false)
     },)
 
 
