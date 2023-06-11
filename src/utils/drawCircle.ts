@@ -15,10 +15,8 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
     return circle
 }
 
-export function pulseCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId:string){
+export function pulseCircle(circleId:string){
     const circleIdSelector:string = 'circle#'+circleId
-    // const svg = svgRef.current
-    // let circle = svg.select(circleIdSelector)
     let circle = select(`${circleIdSelector}`)
 
     circle.transition()
