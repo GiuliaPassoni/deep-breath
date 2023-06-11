@@ -20,7 +20,7 @@ export function Circle(){
     return (
         <div>
             <svg ref={svgRef}/>
-            <button onClick={()=>{pulseCircle(svgRef, 'firstCircle')}}>Click me</button>
+            <button onClick={()=>{pulseCircle('firstCircle')}}>Click me</button>
         </div>
     );
 }

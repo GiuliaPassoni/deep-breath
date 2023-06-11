@@ -19,7 +19,7 @@ export function pulseCircle(circleId:string){
     const circleIdSelector:string = 'circle#'+circleId
     let circle = select(`${circleIdSelector}`)
 
-    circle.transition()
+    return circle.transition()
         .duration(5000)
         .attr("stroke-width", 20)
         .attr('stroke', 'red')
