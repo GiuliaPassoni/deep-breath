@@ -4,7 +4,6 @@ import {min, select} from "d3";
 export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, increase: Boolean){
     const svg = svgRef.current
     let time:number = 0
-        // timeIncrease: number = time*2, timeDecrease: number = time*.5
 
     let myTimerCounter: number=0
 
@@ -23,9 +22,7 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
                 .attr('cx', '50%')
                 .attr('cy', '50%')
                 .attr('stroke','black')
-                // .attr('r', 200-2*time)
                 .attr('r', increase ? radius*time : radius-time)
-                // .attr('r', radius*time )
                 .style('fill', '#a6a6a6');
         }
         time+=.25
