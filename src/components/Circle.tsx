@@ -16,12 +16,12 @@ const duration:number = 1000
 
 export function Circle(){
     const svgRef = useRef<SVGSVGElement | null>(null)
-    let initialisedRef: Boolean = false
+    let initialised: Boolean = false
 
     useEffect(()=>{
         console.log(svgRef.current, 'before')
-        if(!initialisedRef){
-            initialisedRef = true
+        if(!initialised){
+            initialised = true
             select(svgRef.current)
                 .attr('width', width)
                 .attr('height', height)
@@ -37,7 +37,7 @@ export function Circle(){
     return (
         <div>
             <svg ref={svgRef}/>
-            <button onClick={()=>{pulseCircle('firstCircle', duration,maxRadius, startRadius)}}>Pulse</button>
+            <button onClick={()=>{pulseCircle('firstCircle', duration, maxRadius, startRadius)}}>Pulse</button>
             <button onClick={()=>{growCircle('firstCircle', duration, 20, maxRadius)}}>Grow</button>
             <button onClick={()=>{shrinkCircle('firstCircle',duration, 20, startRadius)}}>Shrink</button>
         </div>
