@@ -1,24 +1,21 @@
 import React from "react";
 import {select} from "d3";
 
-export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, startRadius: number) {
+export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, startRadius: number, colour: string) {
     const svg = svgRef.current
     const circle = select(svg).append('circle')
         .attr('id', `${circleId}`)
         .attr('cx', '50%')
         .attr('cy', '50%')
-        .attr('stroke', 'white')
-        .attr("stroke-width", 5)
         .attr('r', startRadius)
-        .style('fill', '#a6a6a6');
+        .style('fill', colour);
 
     return circle
 }
 
-export function testSelectSvgElement(svgId: string){
-    const idSelector: string = '#' + svgId
-    let selectedSvg = select(`${idSelector}`).attr('class', 'red').attr("style", "outline: thin solid red;")
-
+export function testSelectSvgElement(svgId: string, svgElementType?: string){
+    const idSelector: string = svgElementType + '#' + svgId
+    let selectedSvg = select(`${idSelector}`).attr("style", "outline: thin solid red;")
     return selectedSvg
 }
 
@@ -30,8 +27,6 @@ export function pulseCircle(circleId: string, duration: number, expandedRadius: 
         // grow
         .transition()
         .duration(duration)
-        .attr("stroke-width", 20)
-        .attr('stroke', 'red')
         .attr("r", expandedRadius)
         // pause
         .transition()
@@ -39,7 +34,6 @@ export function pulseCircle(circleId: string, duration: number, expandedRadius: 
         // shrink
         .transition()
         .duration(duration)
-        .attr('stroke-width', 0.5)
         .attr("r", reducedRadius)
         .ease()
 }
@@ -51,7 +45,7 @@ export function growCircle(circleId: string, duration: number, strokeWidth: numb
 
     return circle.transition()
         .duration(duration)
-        .attr("stroke-width", 20)
+        .attr("stroke-width", strokeWidth)
         .attr('stroke', 'red')
         .attr("r", expandedRadius)
 }
@@ -62,6 +56,6 @@ export function shrinkCircle(circleId: string, duration: number, strokeWidth: nu
 
     return circle.transition()
         .duration(duration)
-        .attr('stroke-width', 0.5)
+        .attr('stroke-width', strokeWidth)
         .attr("r", reducedRadius)
 }
