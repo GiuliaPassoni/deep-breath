@@ -11,7 +11,7 @@ import {
 
 const width:number = window.innerWidth
 const height:number = window.innerHeight
-const startMainRadius: number = 50, maxMainRadius: number = 150
+const startMainRadius: number = 120, maxMainRadius: number = 200
 const startMiddleRadius: number = startMainRadius + 20, maxMiddleRadius: number = maxMainRadius + 20
 const startOuterRadius: number = startMainRadius + 40, maxOuterRadius: number = maxMainRadius + 40
 const duration:number = 1000
