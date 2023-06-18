@@ -7,15 +7,19 @@ import {
 
 const width:number = window.innerWidth
 const height:number = window.innerHeight
-const startMainRadius: number = 120, maxMainRadius: number = 200
-const startMiddleRadius: number = startMainRadius + 20, maxMiddleRadius: number = maxMainRadius + 20
-const startOuterRadius: number = startMainRadius + 40, maxOuterRadius: number = maxMainRadius + 40
-// const duration:number = 1000
 
-export function Circle(duration: number | any){
+interface circleRadii {
+    startMainRadius: number,
+    maxMainRadius: number,
+    maxMiddleRadius: number,
+    maxOuterRadius: number
+}
+
+export function Circle({startMainRadius,
+                           maxMainRadius,
+                           maxMiddleRadius,
+                           maxOuterRadius}:circleRadii){
     const svgRef = useRef<SVGSVGElement | null>(null)
-
-    duration = duration*1000
 
     let initialised: Boolean = false
 
@@ -31,16 +35,16 @@ export function Circle(duration: number | any){
             drawCircle(svgRef, 'middleCircle', startMainRadius, 'rgba(255,255,255,0.5)')
             drawCircle(svgRef, 'outerCircle', startMainRadius, 'rgba(255,255,255,0.2)')
         }
-    })
+    }, [initialised])
 
 
     return (
         <div>
             <svg ref={svgRef}/>
             <button onClick={()=>{
-                pulseCircle('firstCircle', duration, maxMainRadius, startMainRadius)
-                pulseCircle('middleCircle', duration, maxMiddleRadius, startMainRadius)
-                pulseCircle('outerCircle', duration, maxOuterRadius, startMainRadius)
+                pulseCircle('firstCircle', 1000, maxMainRadius, startMainRadius)
+                pulseCircle('middleCircle', 1000, maxMiddleRadius, startMainRadius)
+                pulseCircle('outerCircle', 1000, maxOuterRadius, startMainRadius)
             }}>Pulse</button>
         </div>
     );
