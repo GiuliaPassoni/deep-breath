@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Circle/>
-            <Timer minutes={10} seconds={0}/>
+            <Timer minutes={2} seconds={0}/>
         </div>
     );
 }
