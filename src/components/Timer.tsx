@@ -5,10 +5,9 @@ interface timeState {
     seconds: number;
 }
 
-// type secondOnlyState = {
-//     seconds: number
-// }
 export default function Timer({minutes = 5, seconds = 0}: timeState) {
+
+    const initialTimer: timeState = {minutes, seconds}
 
     const [timer, setTimer] = useState<timeState>({
         minutes: minutes,
@@ -45,7 +44,8 @@ export default function Timer({minutes = 5, seconds = 0}: timeState) {
     * minutes, seconds = input values i.e. function params.
     * */
     function resetTimer() {
-        setTimer({minutes: timer.minutes, seconds: timer.seconds})
+        setTimer({minutes: initialTimer.minutes, seconds: initialTimer.seconds})
+        setStart(false)
     }
 
     useEffect(() => {
