@@ -62,7 +62,7 @@ export default function Timer({minutes = 5, seconds = 0}: timeState) {
             clearInterval(tick.current)
         }
         return () => clearInterval(tick.current)
-    })
+    }, [start])
 
     return (
         <>
