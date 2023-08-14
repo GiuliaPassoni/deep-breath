@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {pulseCircle} from "../utils/drawCircle";
+import {Simulate} from "react-dom/test-utils";
+import durationChange = Simulate.durationChange;
 
 interface timeState {
     minutes: number;
@@ -22,8 +24,6 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
     const firstRender: React.MutableRefObject<boolean | undefined> = useRef()
     const tick: React.MutableRefObject<any> = useRef()
 
-    let myEffectTest: boolean = false
-
     function timePass(){
         if (timer.seconds === 0 && timer.minutes > 0) {
             setTimer({minutes: timer.minutes -= 1, seconds: timer.seconds = 59})
@@ -32,6 +32,7 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
         } else if (timer.minutes === 0 && timer.seconds === 0) {
             console.log("Timer ended")
             setTimer({minutes: 0, seconds: 0})
+            setStart(false)
         }
     }
 
@@ -43,6 +44,7 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
     function startTimer() {
         setStart(!start)
     }
+
 /*
 *     when timer starts, pulse should start
 * when timer pause, pulse should freeze
@@ -52,11 +54,12 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
 * */
 
     function startPulsing(duration: number){
-        // let myIntervalTest = setInterval(()=>{
+        if(start){
             pulseCircle('firstCircle', duration, maxMainRadius, startMainRadius)
             pulseCircle('middleCircle', duration, maxMiddleRadius, startMainRadius)
             pulseCircle('outerCircle', duration, maxOuterRadius, startMainRadius)
-        // }, duration)
+        }
+        console.log('start timer', start)
     }
 
     useEffect(() => {
@@ -65,14 +68,20 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
             return;
         }
 
+        const pulseDuration = 15000 //this needs to be 3* the duration of each phase (expand, pause, shrink)
+        let timePassed: number = pulseDuration - 100
+
         if(start){
             tick.current = setInterval(function(){
-                timePass()
-                if(!myEffectTest){
-                    myEffectTest = true
-                    startPulsing(5000)
+                timePassed+=100
+                if(timePassed%1000 === 0){
+                    timePass()
                 }
-            }, 1000)
+                if(timePassed>=pulseDuration){
+                    startPulsing(pulseDuration)
+                    timePassed = 0
+                }
+            }, 100)
 
         }else{
             clearInterval(tick.current)

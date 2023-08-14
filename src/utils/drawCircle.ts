@@ -1,5 +1,7 @@
 import React from "react";
 import {select} from "d3";
+import {Simulate} from "react-dom/test-utils";
+import pause = Simulate.pause;
 
 export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, startRadius: number, colour: string) {
     const svg = svgRef.current
@@ -20,39 +22,55 @@ export function testSelectSvgElement(svgId: string, svgElementType?: string){
 }
 
 // @ts-ignore
-export function pulseCircle(circleId: string, duration: number, totalDuration: number, expandedRadius: number, reducedRadius: number) {
+// export function pulseCircle(circleId: string, duration: number, totalDuration: number, expandedRadius: number, reducedRadius: number, pauseAnimation: Boolean) {
+export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number) {
     const circleIdSelector: string = 'circle#' + circleId
     let circle = select(`${circleIdSelector}`)
-    const timeLimit = totalDuration/duration
-    let counter = 1
-    console.log('timelimit', timeLimit)
-    repeatPulse()
+    // const timeLimit = totalDuration/duration
+    // let counter = 1
+    // console.log('timelimit', timeLimit)
+    return circle
+        // grow
+        .transition()
+        .duration(duration/3) //we need /3 because there are 3 phases in total - start, pause, end
+        .attr("r", expandedRadius)
+        // pause
+        .transition()
+        .duration(duration/3)
+        // shrink
+        .transition()
+        .duration(duration/3)
+        .attr("r", reducedRadius)
+    // repeatPulse()
 
-    function repeatPulse(){
-        circle
-            // grow
-            .transition()
-            .duration(duration/3)
-            .attr("r", expandedRadius)
-            // pause
-            .transition()
-            .duration(duration/3)
-            // shrink
-            .transition()
-            .duration(duration/3)
-            .attr("r", reducedRadius)
-            .on("end",
-                function(){
-                    if(counter < timeLimit){
-                        counter ++
-                        repeatPulse()
-                        console.log('test', counter)
-                    }else{
-                        console.log('end')
-                        return
-                    }
-                })
-    }
+    // function repeatPulse(){
+    //     if (!pauseAnimation){
+    //         circle
+    //             // grow
+    //             .transition()
+    //             .duration(duration/3)
+    //             .attr("r", expandedRadius)
+    //             // pause
+    //             .transition()
+    //             .duration(duration/3)
+    //             // shrink
+    //             .transition()
+    //             .duration(duration/3)
+    //             .attr("r", reducedRadius)
+    //             .on("end",
+    //                 function(){
+    //                     if(counter < timeLimit){
+    //                         counter ++
+    //                         repeatPulse()
+    //                         console.log('test', counter)
+    //                     }else{
+    //                         console.log('end')
+    //                         return
+    //                     }
+    //                 })
+    //     }
+    //
+    // }
 }
 
 export function growCircle(circleId: string, duration: number, expandedRadius: number) {

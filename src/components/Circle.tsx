@@ -41,11 +41,11 @@ export function Circle({startMainRadius,
     return (
         <div>
             <svg ref={svgRef}/>
-            <button onClick={()=>{
-                pulseCircle('firstCircle', 1000, maxMainRadius, startMainRadius)
-                pulseCircle('middleCircle', 1000, maxMiddleRadius, startMainRadius)
-                pulseCircle('outerCircle', 1000, maxOuterRadius, startMainRadius)
-            }}>Pulse</button>
+            {/*<button onClick={()=>{*/}
+            {/*    pulseCircle('firstCircle', 1000, 5000, maxMainRadius, startMainRadius)*/}
+            {/*    pulseCircle('middleCircle', 1000,5000, maxMiddleRadius, startMainRadius)*/}
+            {/*    pulseCircle('outerCircle', 1000,5000, maxOuterRadius, startMainRadius)*/}
+            {/*}}>Pulse</button>*/}
         </div>
     );
 }
