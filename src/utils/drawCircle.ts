@@ -19,43 +19,61 @@ export function testSelectSvgElement(svgId: string, svgElementType?: string){
     return selectedSvg
 }
 
-export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number) {
+// @ts-ignore
+export function pulseCircle(circleId: string, duration: number, totalDuration: number, expandedRadius: number, reducedRadius: number) {
+    const circleIdSelector: string = 'circle#' + circleId
+    let circle = select(`${circleIdSelector}`)
+    const timeLimit = totalDuration/duration
+    let counter = 1
+    console.log('timelimit', timeLimit)
+    repeatPulse()
+
+    function repeatPulse(){
+        circle
+            // grow
+            .transition()
+            .duration(duration/3)
+            .attr("r", expandedRadius)
+            // pause
+            .transition()
+            .duration(duration/3)
+            // shrink
+            .transition()
+            .duration(duration/3)
+            .attr("r", reducedRadius)
+            .on("end",
+                function(){
+                    if(counter < timeLimit){
+                        counter ++
+                        repeatPulse()
+                        console.log('test', counter)
+                    }else{
+                        console.log('end')
+                        return
+                    }
+                })
+    }
+}
+
+export function growCircle(circleId: string, duration: number, expandedRadius: number) {
     const circleIdSelector: string = 'circle#' + circleId
     let circle = select(`${circleIdSelector}`)
 
     return circle
-        // grow
         .transition()
         .duration(duration)
         .attr("r", expandedRadius)
         // pause
         .transition()
         .duration(duration)
-        // shrink
+}
+
+export function shrinkCircle(circleId: string, duration: number, reducedRadius: number) {
+    const circleIdSelector: string = 'circle#' + circleId
+    let circle = select(`${circleIdSelector}`)
+
+    return circle
         .transition()
         .duration(duration)
-        .attr("r", reducedRadius)
-        .ease()
-}
-
-
-export function growCircle(circleId: string, duration: number, strokeWidth: number, expandedRadius: number) {
-    const circleIdSelector: string = 'circle#' + circleId
-    let circle = select(`${circleIdSelector}`)
-
-    return circle.transition()
-        .duration(duration)
-        .attr("stroke-width", strokeWidth)
-        .attr('stroke', 'red')
-        .attr("r", expandedRadius)
-}
-
-export function shrinkCircle(circleId: string, duration: number, strokeWidth: number, reducedRadius: number) {
-    const circleIdSelector: string = 'circle#' + circleId
-    let circle = select(`${circleIdSelector}`)
-
-    return circle.transition()
-        .duration(duration)
-        .attr('stroke-width', strokeWidth)
         .attr("r", reducedRadius)
 }
