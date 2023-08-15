@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {pulseCircle} from "../utils/drawCircle";
 import {Simulate} from "react-dom/test-utils";
-import durationChange = Simulate.durationChange;
 
 interface timeState {
     minutes: number;
@@ -21,6 +20,7 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
     })
 
     const [start, setStart] = useState<Boolean | any>(false)
+    const [userInput, setUserInput] = useState<timeState | any>({minutes: initialTimer.minutes, seconds: initialTimer.seconds})
     const firstRender: React.MutableRefObject<boolean | undefined> = useRef()
     const tick: React.MutableRefObject<any> = useRef()
 
@@ -37,7 +37,7 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
     }
 
     function resetTimer() {
-        setTimer({minutes: initialTimer.minutes, seconds: initialTimer.seconds})
+        setTimer({minutes: userInput.minutes, seconds: userInput.seconds})
         setStart(false)
     }
 
@@ -62,13 +62,14 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
         console.log('start timer', start)
     }
 
+
     useEffect(() => {
         if(firstRender.current){
             firstRender.current = !firstRender.current
             return;
         }
 
-        const pulseDuration = 15000 //this needs to be 3* the duration of each phase (expand, pause, shrink)
+        const pulseDuration = 6000 //this needs to be 3* the duration of each phase (expand, pause, shrink)
         let timePassed: number = pulseDuration - 100
 
         if(start){
@@ -77,7 +78,7 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
                 if(timePassed%1000 === 0){
                     timePass()
                 }
-                if(timePassed>=pulseDuration){
+                if(timePassed>pulseDuration){
                     startPulsing(pulseDuration)
                     timePassed = 0
                 }
@@ -91,6 +92,12 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
 
     return (
         <>
+            <input id='mins' type="number" value={userInput.minutes} onChange={(e)=>setUserInput({minutes: e.target.value, seconds: userInput.seconds})}/>
+            <input id='secs' type="number" value={userInput.seconds} onChange={(e)=>setUserInput({minutes: userInput.minutes, seconds: e.target.value})}/>
+            <button onClick={()=>{
+                resetTimer()
+                setTimer({minutes: userInput.minutes, seconds: userInput.seconds})
+            }}>Set timer</button>
             <p>{`${timer.minutes.toString().padStart(2, '0')}:${timer.seconds.toString().padStart(2, '0')}`}</p>
             <button onClick={() => {
                 startTimer()
