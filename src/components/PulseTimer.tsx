@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {pulseCircle} from "../utils/drawCircle";
-import {Simulate} from "react-dom/test-utils";
 
 interface timeState {
     minutes: number;
@@ -93,17 +92,32 @@ export default function PulseTimer({minutes = 5, seconds = 0}: timeState) {
     return (
         <>
             <input id='mins' type="number" value={userInput.minutes} onChange={(e)=>setUserInput({minutes: e.target.value, seconds: userInput.seconds})}/>
+            <span className="separator">:</span>
             <input id='secs' type="number" value={userInput.seconds} onChange={(e)=>setUserInput({minutes: userInput.minutes, seconds: e.target.value})}/>
-            <button onClick={()=>{
-                resetTimer()
-                setTimer({minutes: userInput.minutes, seconds: userInput.seconds})
-            }}>Set timer</button>
-            <p>{`${timer.minutes.toString().padStart(2, '0')}:${timer.seconds.toString().padStart(2, '0')}`}</p>
+            <button id='setTimerButton'
+                    onClick={()=>{
+                        resetTimer()
+                        setTimer({minutes: userInput.minutes, seconds: userInput.seconds}
+                        )
+                    }}>
+                Set timer
+            </button>
+            {/*<button id='deepBreathButton' onClick={()=>{*/}
+            {/*}*/}
+            {/*}>*/}
+            {/*    5-5-5*/}
+            {/*</button>*/}
+            {/*<button id='resonantBreathButton'>*/}
+            {/*    5-0-5*/}
+            {/*</button>*/}
+            {/*<button id='otherBreathButton'>*/}
+            {/*    4-7-8*/}
+            {/*</button>*/}
+            <p className='timerDisplay'>{`${timer.minutes.toString().padStart(2, '0')}:${timer.seconds.toString().padStart(2, '0')}`}</p>
             <button onClick={() => {
                 startTimer()
             }}>{ !start ? "Start" : "Pause" }</button>
             <button onClick={()=> resetTimer()}>Reset</button>
-            {/*<button onClick={()=> startPulsing(1000)}>Start pulsing</button>*/}
         </>
     )
 }
