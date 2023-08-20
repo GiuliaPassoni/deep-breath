@@ -9,7 +9,7 @@ const startMainRadius: number = 80, //120
     maxOuterRadius: number = maxMainRadius + 80//+40
 function App() {
     return (
-        <body className="App">
+        <>
             <main>
                 <h1>Breathing Exercise</h1>
                 <h2>Replicating the Nerva app animation</h2>
@@ -45,7 +45,7 @@ function App() {
                 </section>
                 <section className="animation">
                     <Circle startMainRadius={startMainRadius} maxMainRadius={maxMiddleRadius} maxMiddleRadius={maxMiddleRadius} maxOuterRadius={maxOuterRadius}/>
-                    <PulseTimer minutes={0} seconds={12}/>
+                    <PulseTimer minutes={5} seconds={0}/>
                 </section>
 
             </main>
@@ -53,7 +53,7 @@ function App() {
                 <div> Giulia Passoni 2023 </div>
                 <span className='citation'>Hopper, Susan I.1,2; Murray, Sherrie L.1,2; Ferrara, Lucille R.1,2; Singleton, Joanne K.1,2. Effectiveness of diaphragmatic breathing for reducing physiological and psychological stress in adults: a quantitative systematic review. JBI Database of Systematic Reviews and Implementation Reports 17(9):p 1855-1876, September 2019. | DOI: 10.11124/JBISRIR-2017-003848 </span>
             </footer>
-        </body>
+        </>
 
     );
 }
