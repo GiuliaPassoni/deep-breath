@@ -5,18 +5,22 @@ body {
   font-weight: 100;
   text-align: center;
   width: 100vw;
-  height: 100vh;
+  height: 95vh;
   border: 2px solid #65BCCA;
   background-color: #65BCCA;
 }
 
 .instructions{
+  //position: absolute;
+  //left: 30vh;
+  //top: 11vw;
+  //text-align: left;
 
   .instructions-text{
     width: 500px;
     font-style: italic;
     font-size: 18px;
-    margin: 2em auto;
+    margin: 0 auto;
   }
 }
 .more-text{
@@ -34,6 +38,9 @@ body {
       font-weight: bold;
       margin: .3em 0;
     }
+  }
+  .explain{
+    font-size: 12px;
   }
 }
 
@@ -78,11 +85,15 @@ button{
   color: white;
   text-transform: uppercase;
   margin: 1em;
+  &:active, &:focus:not(#reset, #setTimerButton) {
+    background-color: white;
+    color: #369ca9;
+  }
 }
 
 button#setTimerButton{
     display: block;
-  margin: .5em auto;
+    margin: .5em auto;
   }
 
 footer{
