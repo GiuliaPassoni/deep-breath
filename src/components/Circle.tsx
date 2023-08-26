@@ -27,7 +27,7 @@ export function Circle({startMainRadius,
         if(!initialised){
             initialised = true
             select(svgRef.current)
-                .attr('width', width/2)
+                .attr('width', width/3)
                 .attr('height', height/2)
                 .attr('id', 'mySvgId')
 
