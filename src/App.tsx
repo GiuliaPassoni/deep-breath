@@ -18,19 +18,18 @@ function App() {
                         Instructions
                     </h3>
                     <div className='instructions-text'>
-                        Breath in as the circle expands.
-                        Hold your breath as the expansion pauses.
+                        Breath in as the circle expands.<br/>
+                        Hold your breath as the expansion pauses. <br/>
                         Breath out as the circle shrinks.
                     </div>
                 </section>
                 <section className='more-text'>
                     <div className='breath-style'>
-                        You can set your own timer, or you can choose one of the presets:
+                        You can set your own timer, or you can choose a preset:
                         <ul>
                             <li>
-                                <div className="bold">Deep breathing: 5-5-5</div>
+                                <div className="bold">Deep breathing*: 5-5-5</div>
                                 <div>Breath in for 5; hold for 5; exhale for 5.</div>
-                                <div>Also known as diaphragmatic breathing, this breathing technique has been proven to reduce your physical stress levels (Hopper et al., 2019). </div>
                             </li>
                             <li>
                                 <div className="bold">Resonant breathing: 5-0-5</div>
@@ -41,6 +40,7 @@ function App() {
                                 <div>Breath in for 4; hold for 7; exhale for 8.</div>
                             </li>
                         </ul>
+                        <div className='explain'>*Also known as diaphragmatic breathing, this breathing technique has been proven to reduce your physical stress levels (Hopper et al., 2019). </div>
                     </div>
                 </section>
                 <section className="animation">
