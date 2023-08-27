@@ -1,24 +1,13 @@
 import React, {useEffect, useRef} from "react";
 import {select} from "d3";
-import {
-    drawCircle,
-    pulseCircle
-} from "../utils/drawCircle";
+import { drawCircle } from "../utils/drawCircle";
+import ICircleRadii from '../interfaces/ICircleRadii'
 
 const width:number = window.innerWidth
 const height:number = window.innerHeight
+console.log(height)
 
-interface circleRadii {
-    startMainRadius: number,
-    maxMainRadius: number,
-    maxMiddleRadius: number,
-    maxOuterRadius: number
-}
-
-export function Circle({startMainRadius,
-                           maxMainRadius,
-                           maxMiddleRadius,
-                           maxOuterRadius}:circleRadii){
+export function Circle({...props}:ICircleRadii){
     const svgRef = useRef<SVGSVGElement | null>(null)
 
     let initialised: Boolean = false
@@ -28,12 +17,12 @@ export function Circle({startMainRadius,
             initialised = true
             select(svgRef.current)
                 .attr('width', width/3)
-                .attr('height', height/2)
+                .attr('height', .4*height)
                 .attr('id', 'mySvgId')
 
-            drawCircle(svgRef, 'firstCircle', startMainRadius, '#ffffff')
-            drawCircle(svgRef, 'middleCircle', startMainRadius, 'rgba(255,255,255,0.5)')
-            drawCircle(svgRef, 'outerCircle', startMainRadius, 'rgba(255,255,255,0.2)')
+            drawCircle(svgRef, 'firstCircle', props.startMainRadius, '#ffffff')
+            drawCircle(svgRef, 'middleCircle', props.startMainRadius, 'rgba(255,255,255,0.5)')
+            drawCircle(svgRef, 'outerCircle', props.startMainRadius, 'rgba(255,255,255,0.2)')
         }
     }, [initialised])
 
