@@ -15,15 +15,9 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
     return circle
 }
 
-export function testSelectSvgElement(svgId: string, svgElementType?: string){
-    const idSelector: string = svgElementType + '#' + svgId
-    let selectedSvg = select(`${idSelector}`).attr("style", "outline: thin solid red;")
-    return selectedSvg
-}
 
-// @ts-ignore
 // export function pulseCircle(circleId: string, duration: number, totalDuration: number, expandedRadius: number, reducedRadius: number, pauseAnimation: Boolean) {
-export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number) {
+export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number, isDeepBreath: Boolean = false, isResonantBreath: Boolean = false, is4Breath: Boolean = false) {
     const circleIdSelector: string = 'circle#' + circleId
     let circle = select(`${circleIdSelector}`)
     // const timeLimit = totalDuration/duration
@@ -32,45 +26,26 @@ export function pulseCircle(circleId: string, duration: number, expandedRadius: 
     return circle
         // grow
         .transition()
-        .duration(duration/3) //we need /3 because there are 3 phases in total - start, pause, end
+        .duration(
+            isDeepBreath ? 5000
+                : isResonantBreath ? 5000
+                : is4Breath? duration*4000
+                    : duration/3 //we need /3 because there are 3 phases in total - start, pause, end
+        )
         .attr("r", expandedRadius)
         // pause
         .transition()
-        .duration(duration/3)
+        .duration(isDeepBreath ? 5000
+            : isResonantBreath ? 0
+                : is4Breath? duration*7000
+                    : duration/3)
         // shrink
         .transition()
-        .duration(duration/3)
+        .duration(isDeepBreath ? 5000
+            : isResonantBreath ? 5000
+                : is4Breath? 8000
+                    : duration/3)
         .attr("r", reducedRadius)
-    // repeatPulse()
-
-    // function repeatPulse(){
-    //     if (!pauseAnimation){
-    //         circle
-    //             // grow
-    //             .transition()
-    //             .duration(duration/3)
-    //             .attr("r", expandedRadius)
-    //             // pause
-    //             .transition()
-    //             .duration(duration/3)
-    //             // shrink
-    //             .transition()
-    //             .duration(duration/3)
-    //             .attr("r", reducedRadius)
-    //             .on("end",
-    //                 function(){
-    //                     if(counter < timeLimit){
-    //                         counter ++
-    //                         repeatPulse()
-    //                         console.log('test', counter)
-    //                     }else{
-    //                         console.log('end')
-    //                         return
-    //                     }
-    //                 })
-    //     }
-    //
-    // }
 }
 
 export function growCircle(circleId: string, duration: number, expandedRadius: number) {
@@ -81,6 +56,13 @@ export function growCircle(circleId: string, duration: number, expandedRadius: n
         .transition()
         .duration(duration)
         .attr("r", expandedRadius)
+}
+
+export function pauseCircle(circleId: string, duration: number) {
+    const circleIdSelector: string = 'circle#' + circleId
+    let circle = select(`${circleIdSelector}`)
+
+    return circle
         // pause
         .transition()
         .duration(duration)
