@@ -1,7 +1,6 @@
 import React from "react";
 import {select} from "d3";
 import {Simulate} from "react-dom/test-utils";
-import pause = Simulate.pause;
 
 export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>, circleId: string, startRadius: number, colour: string) {
     const svg = svgRef.current
@@ -22,25 +21,32 @@ export function pulseCircle(circleId: string, duration: number, expandedRadius: 
     let circle = select(`${circleIdSelector}`)
     let growDuration, pauseDuration, shrinkDuration;
 
-    if(breathingPreset === 1){ //deepBreath
-        growDuration = 5000
-        pauseDuration = 5000
-        shrinkDuration = 5000
-    }else if(breathingPreset === 2){ //5-0-5
-        growDuration = 5000
-        pauseDuration = 0
-        shrinkDuration = 5000
-    }else if(breathingPreset === 3){ //4-7-8
-        growDuration = 4000
-        pauseDuration = 7000
-        shrinkDuration = 8000
-    }else{
-        growDuration = duration/3 //we need /3 because there are 3 phases in total - start, pause, end
-        pauseDuration = duration/3
-        shrinkDuration = duration/3
+    switch(breathingPreset) {
+        case 1: {
+            growDuration = 5000
+            pauseDuration = 5000
+            shrinkDuration = 5000
+            break;
+        }
+        case 2: {
+            growDuration = 5000
+            pauseDuration = 0
+            shrinkDuration = 5000
+            break;
+        }
+        case 3: {
+            growDuration = 4000
+            pauseDuration = 7000
+            shrinkDuration = 8000
+            break;
+        }
+        default: {
+            growDuration = duration/3 //we need /3 because there are 3 phases in total - start, pause, end
+            pauseDuration = duration/3
+            shrinkDuration = duration/3
+            break;
+        }
     }
-
-    console.debug('r', expandedRadius)
 
     return circle
         // grow
