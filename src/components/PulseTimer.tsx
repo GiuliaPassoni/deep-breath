@@ -34,7 +34,7 @@ export default function PulseTimer({...props}:Props ) {
         } else if (timer.minutes > 0 || timer.seconds > 0) {
             setTimer({minutes: timer.minutes, seconds: timer.seconds -= 1})
         } else if (timer.minutes === 0 && timer.seconds === 0) {
-            console.log("Timer ended")
+            console.debug("Timer ended")
             setTimer({minutes: 0, seconds: 0})
             setStart(false)
         }
@@ -58,7 +58,7 @@ export default function PulseTimer({...props}:Props ) {
             pulseCircle('middleCircle', duration, props.maxMiddleRadius, props.startMainRadius, breathingPreset)
             pulseCircle('outerCircle', duration, props.maxOuterRadius, props.startMainRadius, breathingPreset)
         }
-        console.debug('start timer', start)
+        console.debug('timer starts', start)
     }
 
 
@@ -88,7 +88,6 @@ export default function PulseTimer({...props}:Props ) {
                 }
                 if(timePassed>pulseDuration){
                     startPulsing(pulseDuration)
-                    console.debug('hi')
                     timePassed = 0
                 }
             }, 100)
@@ -110,7 +109,6 @@ export default function PulseTimer({...props}:Props ) {
             </div>
             <div className='presets'>
                 <button id='deepBreathButton' onClick={()=>{
-                    console.debug('Deep breath mode:', isDeepBreath ? 'On' : "Off")
                     setBreathingPreset(1)
                     resetTimer()
                     startTimer()
