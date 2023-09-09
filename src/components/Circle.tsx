@@ -5,7 +5,6 @@ import ICircleRadii from '../interfaces/ICircleRadii'
 
 const width:number = window.innerWidth
 const height:number = window.innerHeight
-console.log(height)
 
 export function Circle({...props}:ICircleRadii){
     const svgRef = useRef<SVGSVGElement | null>(null)

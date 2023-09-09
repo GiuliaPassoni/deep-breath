@@ -20,31 +20,39 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
 export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number, isDeepBreath: Boolean = false, isResonantBreath: Boolean = false, is4Breath: Boolean = false) {
     const circleIdSelector: string = 'circle#' + circleId
     let circle = select(`${circleIdSelector}`)
-    // const timeLimit = totalDuration/duration
-    // let counter = 1
-    // console.log('timelimit', timeLimit)
+    console.debug('pulseCircle', isDeepBreath)
+    let growDuration, pauseDuration, shrinkDuration;
+    if(isDeepBreath){
+        growDuration = 5000
+        pauseDuration = 5000
+        shrinkDuration = 5000
+    }else if(isResonantBreath){
+        growDuration = 5000
+        pauseDuration = 0
+        shrinkDuration = 5000
+    }else if(is4Breath){
+        growDuration = 4000
+        pauseDuration = 7000
+        shrinkDuration = 8000
+    }else{
+        growDuration = duration/3 //we need /3 because there are 3 phases in total - start, pause, end
+        pauseDuration = duration/3
+        shrinkDuration = duration/3
+    }
+
+    console.debug('r', expandedRadius)
+
     return circle
         // grow
         .transition()
-        .duration(
-            isDeepBreath ? 5000
-                : isResonantBreath ? 5000
-                : is4Breath? duration*4000
-                    : duration/3 //we need /3 because there are 3 phases in total - start, pause, end
-        )
+        .duration(growDuration)
         .attr("r", expandedRadius)
         // pause
         .transition()
-        .duration(isDeepBreath ? 5000
-            : isResonantBreath ? 0
-                : is4Breath? duration*7000
-                    : duration/3)
+        .duration(pauseDuration)
         // shrink
         .transition()
-        .duration(isDeepBreath ? 5000
-            : isResonantBreath ? 5000
-                : is4Breath? 8000
-                    : duration/3)
+        .duration(shrinkDuration)
         .attr("r", reducedRadius)
 }
 

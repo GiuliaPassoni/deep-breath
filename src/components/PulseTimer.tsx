@@ -50,21 +50,13 @@ export default function PulseTimer({...props}:Props ) {
         setStart(!start)
     }
 
-/*
-*     when timer starts, pulse should start
-* when timer pause, pulse should freeze
-* when timer resets, so does pulse
-* when timer finishes, pulse is back to stage 0
-*
-* */
-
     function startPulsing(duration: number){
         if(start){
-            pulseCircle('firstCircle', duration, props.maxMainRadius, props.startMainRadius)
-            pulseCircle('middleCircle', duration, props.maxMiddleRadius, props.startMainRadius)
-            pulseCircle('outerCircle', duration, props.maxOuterRadius, props.startMainRadius)
+            pulseCircle('firstCircle', duration, props.maxMainRadius, props.startMainRadius, isDeepBreath)
+            pulseCircle('middleCircle', duration, props.maxMiddleRadius, props.startMainRadius, isDeepBreath)
+            pulseCircle('outerCircle', duration, props.maxOuterRadius, props.startMainRadius, isDeepBreath)
         }
-        console.log('start timer', start)
+        console.debug('start timer', start)
     }
 
 
@@ -74,7 +66,16 @@ export default function PulseTimer({...props}:Props ) {
             return;
         }
 
-        const pulseDuration = 6000 //this needs to be 3* the duration of each phase (expand, pause, shrink)
+        let pulseDuration = 6000 //this needs to be 3* the duration of each phase (expand, pause, shrink)
+
+        if(isDeepBreath){
+            pulseDuration = 15000
+        }else if(isResonantBreath){
+            pulseDuration = 10000
+        }else if(is4Breath){
+            pulseDuration = 19000
+        }
+
         let timePassed: number = pulseDuration - 100
 
         if(start){
@@ -85,6 +86,7 @@ export default function PulseTimer({...props}:Props ) {
                 }
                 if(timePassed>pulseDuration){
                     startPulsing(pulseDuration)
+                    console.debug('hi')
                     timePassed = 0
                 }
             }, 100)
@@ -101,20 +103,17 @@ export default function PulseTimer({...props}:Props ) {
                 <p className='timerDisplay'>{`${timer.minutes.toString().padStart(2, '0')}:${timer.seconds.toString().padStart(2, '0')}`}</p>
                 <button id='start' onClick={() => {
                     startTimer()
-                // }}>{ !start ? "Start" : "Pause" }</button>
                 }}>Start</button>
-                {/*todo: remove pause functionality bc it defeats the point of the breathing exercise*/}
                 <button id='reset' onClick={()=> resetTimer()}>Reset</button>
             </div>
             <div className='presets'>
                 <button id='deepBreathButton' onClick={()=>{
-                    resetTimer()
-                    // setUserInput({minutes: 5, seconds: 0})
-                    // setTimer({minutes: 5, seconds: 0})
-                    console.log(isDeepBreath)
+                    console.debug('Deep breath mode:', isDeepBreath ? 'On' : "Off")
                     setIsDeepBreath( true)
                     setIsResonantBreath(false)
                     setIs4Breath(false)
+                    resetTimer()
+                    startTimer()
                 }}>
                     5-5-5
                 </button>
@@ -133,23 +132,6 @@ export default function PulseTimer({...props}:Props ) {
                     4-7-8
                 </button>
             </div>
-            {/*<div className='userSetTimer'>*/}
-            {/*    <p>Or set your own timer:</p>*/}
-            {/*    <input id='mins' type="number" value={userInput.minutes} onChange={(e)=>setUserInput({minutes: e.target.value, seconds: userInput.seconds})}/>*/}
-            {/*    <span className="separator">:</span>*/}
-            {/*    <input id='secs' type="number" value={userInput.seconds} onChange={(e)=>setUserInput({minutes: userInput.minutes, seconds: e.target.value})}/>*/}
-            {/*    <button id='setTimerButton'*/}
-            {/*            onClick={()=>{*/}
-            {/*                resetTimer()*/}
-            {/*                setTimer({minutes: userInput.minutes, seconds: userInput.seconds}*/}
-            {/*                )*/}
-            {/*            }}>*/}
-            {/*        Set timer*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-
-
-
         </>
     )
 }
