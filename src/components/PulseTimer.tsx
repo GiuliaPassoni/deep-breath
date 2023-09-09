@@ -22,6 +22,8 @@ export default function PulseTimer({...props}:Props ) {
     const firstRender: React.MutableRefObject<boolean | undefined> = useRef()
     const tick: React.MutableRefObject<any> = useRef()
 
+    const [breathingPreset, setBreathingPreset] =  useState<Number | any>( 0)
+
     const [isDeepBreath, setIsDeepBreath] = useState<Boolean | any>( false)
     const [isResonantBreath, setIsResonantBreath] = useState<Boolean | any>(false)
     const [is4Breath, setIs4Breath] = useState<Boolean | any>(false)
@@ -52,9 +54,9 @@ export default function PulseTimer({...props}:Props ) {
 
     function startPulsing(duration: number){
         if(start){
-            pulseCircle('firstCircle', duration, props.maxMainRadius, props.startMainRadius, isDeepBreath)
-            pulseCircle('middleCircle', duration, props.maxMiddleRadius, props.startMainRadius, isDeepBreath)
-            pulseCircle('outerCircle', duration, props.maxOuterRadius, props.startMainRadius, isDeepBreath)
+            pulseCircle('firstCircle', duration, props.maxMainRadius, props.startMainRadius, breathingPreset)
+            pulseCircle('middleCircle', duration, props.maxMiddleRadius, props.startMainRadius, breathingPreset)
+            pulseCircle('outerCircle', duration, props.maxOuterRadius, props.startMainRadius, breathingPreset)
         }
         console.debug('start timer', start)
     }
@@ -68,11 +70,11 @@ export default function PulseTimer({...props}:Props ) {
 
         let pulseDuration = 6000 //this needs to be 3* the duration of each phase (expand, pause, shrink)
 
-        if(isDeepBreath){
+        if(breathingPreset === 1){
             pulseDuration = 15000
-        }else if(isResonantBreath){
+        }else if(breathingPreset === 2){
             pulseDuration = 10000
-        }else if(is4Breath){
+        }else if(breathingPreset === 3){
             pulseDuration = 19000
         }
 
@@ -109,25 +111,23 @@ export default function PulseTimer({...props}:Props ) {
             <div className='presets'>
                 <button id='deepBreathButton' onClick={()=>{
                     console.debug('Deep breath mode:', isDeepBreath ? 'On' : "Off")
-                    setIsDeepBreath( true)
-                    setIsResonantBreath(false)
-                    setIs4Breath(false)
+                    setBreathingPreset(1)
                     resetTimer()
                     startTimer()
                 }}>
                     5-5-5
                 </button>
                 <button id='resonantBreathButton' onClick={()=>{
-                    setIsResonantBreath(true)
-                    setIsDeepBreath(false)
-                    setIs4Breath(false)
+                    setBreathingPreset(2)
+                    resetTimer()
+                    startTimer()
                 }}>
                     5-0-5
                 </button>
                 <button id='otherBreathButton' onClick={()=>{
-                    setIs4Breath(true)
-                    setIsDeepBreath(false)
-                    setIsResonantBreath(false)
+                    setBreathingPreset(3)
+                    resetTimer()
+                    startTimer()
                 }}>
                     4-7-8
                 </button>

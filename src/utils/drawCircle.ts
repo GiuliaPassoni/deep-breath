@@ -17,20 +17,20 @@ export function drawCircle(svgRef: React.MutableRefObject<SVGSVGElement | null>,
 
 
 // export function pulseCircle(circleId: string, duration: number, totalDuration: number, expandedRadius: number, reducedRadius: number, pauseAnimation: Boolean) {
-export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number, isDeepBreath: Boolean = false, isResonantBreath: Boolean = false, is4Breath: Boolean = false) {
+export function pulseCircle(circleId: string, duration: number, expandedRadius: number, reducedRadius: number, breathingPreset: number = 0) {
     const circleIdSelector: string = 'circle#' + circleId
     let circle = select(`${circleIdSelector}`)
-    console.debug('pulseCircle', isDeepBreath)
     let growDuration, pauseDuration, shrinkDuration;
-    if(isDeepBreath){
+
+    if(breathingPreset === 1){ //deepBreath
         growDuration = 5000
         pauseDuration = 5000
         shrinkDuration = 5000
-    }else if(isResonantBreath){
+    }else if(breathingPreset === 2){ //5-0-5
         growDuration = 5000
         pauseDuration = 0
         shrinkDuration = 5000
-    }else if(is4Breath){
+    }else if(breathingPreset === 3){ //4-7-8
         growDuration = 4000
         pauseDuration = 7000
         shrinkDuration = 8000
