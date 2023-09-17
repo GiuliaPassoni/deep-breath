@@ -1,12 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
-import {growCircle, pauseCircle, pulseCircle, shrinkCircle} from "../utils/drawCircle";
+import {pulseCircle, shrinkCircle} from "../utils/drawCircle";
 import ITimeState from '../interfaces/ITimeState'
 import ICircleRadii from '../interfaces/ICircleRadii'
-import {select} from "d3";
-// const startMainRadius: number = 80, //120
-//     maxMainRadius: number = 160, //200
-//     maxMiddleRadius: number = maxMainRadius + 40, //+20
-//     maxOuterRadius: number = maxMainRadius + 80//+40
 
 type Props = ITimeState & ICircleRadii
 
@@ -24,9 +19,7 @@ export default function PulseTimer({...props}:Props ) {
 
     const [breathingPreset, setBreathingPreset] =  useState<Number | any>( 0)
 
-    const [isDeepBreath, setIsDeepBreath] = useState<Boolean | any>( false)
-    const [isResonantBreath, setIsResonantBreath] = useState<Boolean | any>(false)
-    const [is4Breath, setIs4Breath] = useState<Boolean | any>(false)
+    // const [showInfo, setShowInfo] = useState<Boolean | any>( false)
 
     function timePass(){
         if (timer.seconds === 0 && timer.minutes > 0) {
